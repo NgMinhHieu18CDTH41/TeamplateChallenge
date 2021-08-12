@@ -45,6 +45,40 @@
             $(this).tab('show');
         });
     })
+  
+       //Change Cart Ajax
+       function changeCartAjax(id, quantity) {
+        $.ajax({
+            url: '{{ url('update-cart') }}',
+            method: "patch",
+            data: {_token: '{{ csrf_token() }}', id: id, quantity: quantity},
+            success: function (res) {
+                var arr = res.data;
+                $.each(arr, function (index, item) {
+                    var itemTotal = item.price * item.quantity;
+                    $('.itemPrice' + index).html(number_format(itemTotal) + '&nbsp;₫');
+
+                });
+                $('.totals_price').html(number_format(res.total) + '&nbsp;₫');
+                $('.cart-quantity').html(res.amount);
+            }
+             
+        });
+    }
+
+    //Update cart
+    $(".update-cart").click(function (e) {
+        var id = $(this).data('id');
+        var quantity = $(this).val();
+        changeCartAjax(id, quantity);
+    });
+
+    //Update cart keyup
+    function updateCart(ob, id) {
+        var quantity = ob.value;
+        if (quantity < 1) return alert('Vui lòng nhập số lượng lớn hơn 0!');
+        changeCartAjax(id, quantity);
+    }
 </script>
 
 </html>

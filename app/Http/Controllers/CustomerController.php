@@ -86,7 +86,7 @@ class CustomerController extends Controller
 //        dd($products);
 
 
-        return view('adminlte::customers.view', compact('orderDetail','products'));
+        return view('adminlte::customers.view', compact('orderDetail','products','arr_Order'));
 
     }
 

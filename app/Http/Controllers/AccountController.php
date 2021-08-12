@@ -53,10 +53,7 @@ class AccountController extends Controller
         $categories = Category::all();
 
         $orderDetail = Order::with('orderdetails','loyalcustomer')->where('loyal_customers_id', $id)->first();
-
         $arr_Order = $orderDetail->orderdetails;
-
-//        dd($arr_Order);
         $ids = [];
         foreach($arr_Order as $item){
             $ids[] = $item->product_id;

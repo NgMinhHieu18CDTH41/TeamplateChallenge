@@ -20,8 +20,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-//        $duedate = Carbon::now()->addDays(14);
-//            dd($duedate);
+        //        $duedate = Carbon::now()->addDays(14);
+        //            dd($duedate);
         // tổng đơn hàng
         $order = Order::all()->where('id')->count();
         // Tổng số thành viên
@@ -29,9 +29,9 @@ class AdminController extends Controller
         // Tổng số lượng sản phẩm
         $products = Product::all()->where('id')->count();
         // danh sách 10 đơn hàng gần nhất
-        $detail = Order::all()->sum('total');
+        $detail = Order::where('status', 3)->sum('total');
         // danh sách 10 đơn hàng gần nhất
-        $listcustomers = LoyalCustomer::with('orders')->orderByDesc('id')->limit(10)->get();
+        $listcustomers = LoyalCustomer::with('orders')->orderByDesc('id')->limit(7)->get();
 
 
         $listday = DateHelper::getListDayInMonth();
@@ -49,41 +49,52 @@ class AdminController extends Controller
 
         $statusChart = [
             [
-                'Tiếp nhận' , $statusDefault,false
+                'Tiếp nhận', $statusDefault, false
             ],
             [
-                'Đang vận chuyển' , $statusProcess,false
+                'Đang vận chuyển', $statusProcess, false
             ],
             [
-                'Đã hoàn thành ' , $statusSuccess,false
+                'Đã hoàn thành ', $statusSuccess, false
             ],
             [
-                'Hủy bỏ' , $statusCancel,false
+                'Hủy bỏ', $statusCancel, false
             ],
 
-         ];
-//dd($statusChart);
+        ];
+        //dd($statusChart);
 
 
         // doanh thu theo tháng ứng với trạng thái đã xử lí
-        $revenueProduct =  Order::where('status', 3)->whereMonth('created_at',date('m'))
-            ->select(DB::raw('sum(total) as total '),DB::raw('DATE(created_at)day  '))
+        $revenueProduct =  Order::where('status', 3)->whereMonth('created_at', date('m'))
+            ->select(DB::raw('sum(total) as total '), DB::raw('DATE(created_at)day  '))
             ->groupBy('day')
             ->get()->toArray();
         // doanh thu theo tháng ứng với trạng thái đang vận chuyển
-        $revenueProductDefault =  Order::where('status', 2)->whereMonth('created_at',date('m'))
-            ->select(DB::raw('sum(total) as total '),DB::raw('DATE(created_at)day  '))
+        $revenueProductDefault =  Order::where('status', 2)->whereMonth('created_at', date('m'))
+            ->select(DB::raw('sum(total) as total '), DB::raw('DATE(created_at)day  '))
+            ->groupBy('day')
+            ->get()->toArray();
+        // doanh thu theo tháng ứng với trạng thái tiếp nhận
+        $revenueProductDReceive =  Order::where('status', 1)->whereMonth('created_at', date('m'))
+            ->select(DB::raw('sum(total) as total '), DB::raw('DATE(created_at)day  '))
+            ->groupBy('day')
+            ->get()->toArray();
+        // doanh thu theo tháng ứng với trạng thái hủy đơn
+        $revenueProductDCancel =  Order::where('status', -1)->whereMonth('created_at', date('m'))
+            ->select(DB::raw('sum(total) as total '), DB::raw('DATE(created_at)day  '))
             ->groupBy('day')
             ->get()->toArray();
 
-
         $arrevenueProductDefault = [];
-
+        $arrevenueProductReceive = [];
         $arrevenueProduct = [];
-        foreach($listday as $day){
+        $arrevenueProductCancel = [];
+
+        foreach ($listday as $day) {
             $total = 0;
-            foreach ($revenueProduct as $key => $revenue){
-                if ($revenue['day'] == $day){
+            foreach ($revenueProduct as $key => $revenue) {
+                if ($revenue['day'] == $day) {
                     $total = $revenue['total'];
                     break;
                 }
@@ -91,28 +102,36 @@ class AdminController extends Controller
             $arrevenueProduct[] = (int)$total;
             // default
             $total = 0;
-            foreach ($revenueProductDefault as $key => $revenue){
-                if ($revenue['day'] == $day){
+            foreach ($revenueProductDefault as $key => $revenue) {
+                if ($revenue['day'] == $day) {
                     $total = $revenue['total'];
                     break;
                 }
             }
             $arrevenueProductDefault[] = (int)$total;
-//            //drive
-//            $total = 0;
-//            foreach ($revenueProductDefault as $key => $revenue){
-//                if ($revenue['day'] == $day){
-//                    $total = $revenue['total'];
-//                    break;
-//                }
-//            }
-//            $arrevenueProductDrive[] = (int)$total;
-
+            //            //drive
+            $total = 0;
+            foreach ($revenueProductDReceive as $key => $revenue) {
+                if ($revenue['day'] == $day) {
+                    $total = $revenue['total'];
+                    break;
+                }
+            }
+            $arrevenueProductReceive[] = (int)$total;
+             //            //drive
+             $total = 0;
+             foreach ($revenueProductDCancel as $key => $revenue) {
+                 if ($revenue['day'] == $day) {
+                     $total = $revenue['total'];
+                     break;
+                 }
+             }
+             $arrevenueProductCancel[] = (int)$total;
         }
 
-//        dd($arrevenueProduct);
+        //        dd($arrevenueProduct);
 
-//        dd($revenueProduct);
+        //        dd($revenueProduct);
         $viewData = [
             'totalUser' => $customers,
             'totalProducts' => $products,
@@ -123,9 +142,11 @@ class AdminController extends Controller
             'listDay' => json_encode($listday, true),
             'statusChart' => json_encode($statusChart),
             'arrRevenueProduct' => json_encode($arrevenueProduct),
+            'arrRevenueProduct1' => json_encode($arrevenueProductReceive),
+            'arrevenueProductCancel' => json_encode($arrevenueProductCancel),
             'arrRevenueProductDefault' => json_encode($arrevenueProductDefault)
         ];
-//        dd($viewData['totalUser']);
+        //        dd($viewData['totalUser']);
         return view('adminlte::home', compact('viewData'));
     }
 

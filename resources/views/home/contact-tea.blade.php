@@ -92,7 +92,10 @@
                                                 <fieldset>
                                                     <textarea placeholder="Nội dung*" name="contact[body]" id="comment" class="form-control content-area form-control-lg" rows="5" required=""></textarea>
                                                 </fieldset>
+
                                                 <fieldset>
+                                                    <br>
+                                                    
                                                     <button type="submit" class="margin-top-20 btn btn-main btn-primary bg_gradient btn-lienhe">Gửi thông tin</button>
                                                 </fieldset>
                                             </div>

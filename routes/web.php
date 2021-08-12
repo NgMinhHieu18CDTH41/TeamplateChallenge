@@ -72,7 +72,7 @@ Route::prefix('account')->group( function () {
 /* cart-checkout*/
 Route::get('/add-to-cart/{id}','ProductsController@addToCart')->name('add-cart');
 Route::get('/cart','ProductsController@cart')->name('cart')  ;
-Route::get('/cart/update/{id}','ProductsController@updatecart')->name('update-cart')  ;
+Route::patch('update-cart','ProductsController@updatecart')->name('update.cart')  ;
 Route::get('/cart/remove/{id}','ProductsController@removeFromCart')->name('remove');
 Route::get('/cart/destroy','ProductsController@cartdestroy')->name('destroy');
 /* checkout*/

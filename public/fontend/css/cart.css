@@ -22,10 +22,12 @@
     font-weight: 400;
     text-align: right;
 }
-.remove-itemx{
-    color  : #898989;
+
+.remove-itemx {
+    color: #898989;
     margin-left: 10px;
 }
+
 button.cart__submit {
     background: green;
     color: rgb(255, 255, 255);
@@ -37,13 +39,16 @@ button.cart__submit {
     display: block;
     margin: 15px 0px;
     cursor: pointer;
-
 }
-.float-right{
+
+.float-right {
     float: right;
-}button.btn.btn-checkout-cart {
-     font-family: inherit;
- }
+}
+
+button.btn.btn-checkout-cart {
+    font-family: inherit;
+}
+
 p.prices__total {
     padding: 17px 20px;
     /* display: flex; */
@@ -51,16 +56,21 @@ p.prices__total {
     -webkit-box-pack: justify;
     justify-content: space-between;
     margin: 0px;
-}ul.prices__items {
-     list-style: none;
-     margin: 0px;
-     padding: 17px 20px;
-     /*border-bottom: 1px solid rgb(244, 244, 244);*/
- }.buttn {
-      display: inline-flex;
-      width: 452px;
-      height: 100px;
-  }
+}
+
+ul.prices__items {
+    list-style: none;
+    margin: 0px;
+    padding: 17px 20px;
+    /*border-bottom: 1px solid rgb(244, 244, 244);*/
+}
+
+.buttn {
+    display: inline-flex;
+    width: 452px;
+    height: 100px;
+}
+
 i.flex {
     font-weight: 300;
     font-style: normal;
@@ -72,6 +82,7 @@ i.flex {
     display: flex;
     margin-left: 21px;
 }
+
 .main-container .col-main .cart .cart-thead {
     background: #f7f7f7;
     font-weight: 700;
@@ -185,7 +196,6 @@ i.flex {
     color: #282828;
     font-family: "Quicksand", sans-serif;
     font-size: 16px;
-    font-weight: 700;
     text-transform: uppercase;
     margin-top: 0px;
 }

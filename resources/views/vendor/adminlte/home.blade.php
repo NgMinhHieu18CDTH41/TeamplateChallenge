@@ -72,20 +72,29 @@
         <!-- /.row (main row) -->
 
     </section>
-
-        <div class="col-sm-8 col-lg-8">
-            <figure class="highcharts-figure">
-                <div id="container2" data-day="{{$viewData['listDay']}}" data-money="{{$viewData['arrRevenueProduct']}}" data-money-default="{{$viewData['arrRevenueProductDefault']}}"</div>
-
-            </figure>
+        <div class="row">
+            <div class="col md-12">
+                <figure class="highcharts-figure">
+                    <div id="container2" data-mon={{$viewData['arrRevenueProduct1']}}  data-day="{{$viewData['listDay']}}" data-money="{{$viewData['arrRevenueProduct']}}" data-money-default="{{$viewData['arrRevenueProductDefault']}}" data-money-cancel="{{$viewData['arrevenueProductCancel']}}"></div>
+    
+                </figure>
+            </div>
         </div>
-        <div class="col-sm-4 col-lg-4">
-            <figure class="highcharts-figure">
-                <div id="container" data-json="{{$viewData['statusChart']}}"></div>
+        <div class="row">
+       
+            <br>
 
-            </figure>
-
+            <div class="col-md-12">
+                <figure class="highcharts-figure">
+                    <div id="container" data-json="{{$viewData['statusChart']}}"></div>
+    
+                </figure>
+            </div>
         </div>
+        <br>
+        
+           
+
 
     {{--    </div>--}}
     <div class="row">
@@ -225,20 +234,15 @@
                 stroke-width: 2px;
             }
 
-            .highcharts-figure, .highcharts-data-table table {
-                min-width: 320px;
-                max-width: 600px;
-                margin: 1em auto;
-            }
+        
 
-            .highcharts-data-table table {
+            .highcharts-data-table  table {
                 font-family: Verdana, sans-serif;
                 border-collapse: collapse;
                 border: 1px solid #EBEBEB;
                 margin: 10px auto;
                 text-align: center;
                 width: 100%;
-                max-width: 500px;
             }
 
             .highcharts-data-table caption {
@@ -264,10 +268,7 @@
                 background: #f1f7ff;
             }
 
-            #container2 {
-                height: 400px;
-                width: 600px;
-            }
+         
 
         </style>
 
@@ -313,12 +314,16 @@
             listMoneyMonth = JSON.parse(listMoneyMonth)
             var listMoneyMonthDefault = document.getElementById("container2").getAttribute('data-money-default');
             listMoneyMonthDefault = JSON.parse(listMoneyMonthDefault)
+            var listMoneyMonthDefault1 = document.getElementById("container2").getAttribute('data-mon');
+            listMoneyMonthDefault1 = JSON.parse(listMoneyMonthDefault1)
+            var listMoneyMonthCancel = document.getElementById("container2").getAttribute('data-money-cancel');
+            listMoneyMonthCancel = JSON.parse(listMoneyMonthCancel)
             Highcharts.chart('container2', {
                 chart: {
                     type: 'spline'
                 },
                 title: {
-                    text: 'Thống kê doanh thu tháng '
+                    text: 'Thống kê doanh thu các ngày trong tháng '
                 },
 
                 xAxis: {
@@ -360,6 +365,20 @@
                         symbol: 'square'
                     },
                     data: listMoneyMonthDefault
+
+                },{
+                    name: 'Đã tiếp nhận',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: listMoneyMonthDefault1
+
+                },{
+                    name: 'Hủy đơn',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: listMoneyMonthCancel
 
                 }
                 ],

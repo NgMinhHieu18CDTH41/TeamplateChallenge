@@ -53,19 +53,15 @@
                     <?php  $stt = 1;?>
 
 
-                    @foreach($products as $item)
-                        <?php $detail= \App\Model\OrderDetail::where('product_id', $item->id)->first();
-
-                            ?>
+                    @foreach($arr_Order as $item)
+                      
                     <td>{{$stt}}</td>
                     <td>{{$item->name}}</td>
-                     <td><img  width="100"  src="{{ asset('storage'. str_replace('public', '', $item->image))}}"></td>
-                            <td>{{number_format($detail ->price)}} đ</td>
+                     <td><img  width="100"  src="{{ asset('storage'. str_replace('public', '', $item->products->image))}}"></td>
+                            <td>{{number_format($item->products->price)}} đ</td>
+                        <td>{{$item->quantity}}</td>
 
-
-                        <td>{{$detail->quantity}}</td>
-
-                    <td>{{$detail ->created_at}}</td>
+                    <td>{{$item ->created_at}}</td>
 {{--                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>--}}
                 </tr>
                 <?php $stt++;?>

@@ -38,7 +38,8 @@ class ProductsController extends Controller
     public function cart(){
         $categories= Category::all();
         // $cartItem = Cart::Content()->count();
-        $cart = Session::get('cart');
+        $cart = Session::get('cart'); 
+       
         return view('cart.cart',compact('cart','categories'));
     }
     public function addToCart($id){
@@ -73,23 +74,30 @@ class ProductsController extends Controller
         return back()->with('success','Đã thêm sản phẩm '.$pro->name.' thành công');
 
     }
-    public function updateCart(Request $cartdata)
+    public function updateCart(Request $request)
     {
-        $cart = Session::get('cart');
-    
-        foreach ($cartdata->all() as $id => $val) 
-        {
-            if ($val > 0) {
-                $cart[$id]['qty'] += $val;
-            } else {
-                unset($cart[$id]);
+        if($request->id && $request->quantity){
+            $cart = session()->get('cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            if (empty($cart)) return 0;
+
+            $totalPrice = 0;
+            foreach ($cart as $key => $item){
+                $itemTotalPrice = ($item['price'] * $item['quantity']);
+                $totalPrice += $itemTotalPrice;
             }
+            $countQty = 0;
+            foreach ($cart as $key => $item){
+                $countQty += $item['quantity'];
+            }
+            session()->put('cart', $cart);
+            return response()->json([
+                'data' => $cart,
+                'total'=>$totalPrice,
+                'amount'=>$countQty,
+                'message' => 'Cập nhật sản phẩm thành công!',
+            ]);
         }
-        Session::put('cart', $cart);
-            //Đếm số lượng sp trong giỏ hàng
-            $carts = new Cart();
-            $amount = $carts->getTotalQuantity();
-        return redirect()->back();
     }
 
     public function removeFromCart( request $request)

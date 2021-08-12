@@ -6,8 +6,7 @@ $(document).ready(function() {
         speed: 300,
         slidesToShow: 4,
         slidesToScroll: 1,
-        responsive: [
-            {
+        responsive: [{
 
                 breakpoint: 1024,
                 settings: {
@@ -15,14 +14,13 @@ $(document).ready(function() {
                     slidesToScroll: 4,
 
                 }
-            }
-            ,{
+            }, {
                 breakpoint: 991,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3
                 }
-            },{
+            }, {
                 breakpoint: 700,
                 settings: {
                     slidesToShow: 2,
@@ -61,8 +59,7 @@ $(document).ready(function() {
         speed: 300,
         slidesToShow: 3,
         slidesToScroll: 3,
-        responsive: [
-            {
+        responsive: [{
                 breakpoint: 1200,
                 settings: {
                     slidesToShow: 3,
@@ -273,3 +270,47 @@ function openCity(evt, cityName) {
 
 
 
+function validInputQty(ob) {
+    if (ob.value == 0) ob.value = 1;
+}
+
+function qtyDown(ob, id) {
+    var qty = ob.nextElementSibling.value;
+    qty--;
+    document.querySelector('[data-id="' + id + '"]').value = qty;
+    if (qty < 1) return alert('Vui lòng nhập số lượng lớn hơn 0!');
+    changeCartAjax(id, qty);
+}
+
+function qtyUp(ob, id) {
+    var qty = ob.previousElementSibling.value;
+    qty++;
+    console.log(qty++);
+    document.querySelector('[data-id="' + id + '"]').value = qty;
+    changeCartAjax(id, qty);
+}
+
+
+function number_format(number, decimals, dec_point, thousands_sep) {
+    // Strip all characters but numerical ones.
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function(n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}

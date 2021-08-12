@@ -133,6 +133,7 @@
                                     </div>
                                 </div>
                             </div>
+                   
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="table-order">
                                     <div class="table-responsive-block table_mobile">
@@ -142,32 +143,33 @@
                                                 <th class="th">Sản phẩm</th>
                                                 <th class="th">Đơn giá</th>
                                                 <th class="th">Số lượng</th>
+                                                <th class="th">Tổng giá sản phẩm</th>
 
                                             </tr>
                                             </thead>
                                             <tbody>
 
                                             <tr>
-                                                @foreach($products as $item)
-                                                    <?php $detail= \App\Model\OrderDetail::where('product_id', $item->id)->first();
-
-                                                    ?>
+                                                @foreach ($arr_Order as $object)
+                                                
                                                 <td class="link" data-title="Tên">
                                                     <div class="image_order">
-                                                        <a title="Caramel Phomai" href="/caramel-phomai"><img  width="100"  src="{{ asset('storage'. str_replace('public', '', $item->image))}}"></a>
+                                                        <a title="Caramel Phomai" href="/caramel-phomai"><img  width="100"  src="{{ asset('storage'. str_replace('public', '', $object->products->image))}}"></a>
                                                     </div>
                                                     <div class="content_right">
-                                                        <a class="title_order" href="/caramel-phomai" title="Caramel Phomai">{{$item->name}}</a>
+                                                        <a class="title_order" href="/caramel-phomai" title="Caramel Phomai">{{ $object->products->name}}</a>
 
                                                     </div>
 
                                                 </td>
-                                                <td data-title="Giá" class="numeric">{{number_format($item->price)}} đ</td>
-                                                <td data-title="Số lượng" class="numeric">{{$detail->quantity}}</td>
+                                                <td data-title="Giá" class="numeric">{{number_format($object->products->price)}} đ</td>
+                                                <td data-title="Số lượng" class="numeric">{{$object->quantity}}</td>
+                                                <td data-title="Tổng giá" class="numeric">{{number_format($object->products->price * $object->quantity)}} đ</td>
 
 
                                             </tr>
                                             @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -181,7 +183,6 @@
                                         <tr class="order_summary order_total">
                                             <td>Tổng tiền</td>
                                             <td class="right" ><strong style="color:#CA170E;font-size:19px;">{{number_format($orderDetail->total)}} đ
-                                             <small class="text-danger" >(đã trừ tiền giảm giá)</small></strong>
                                             </td>
 
                                         </tr>
