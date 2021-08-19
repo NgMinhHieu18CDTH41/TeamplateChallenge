@@ -79,7 +79,7 @@
                                     <div class="item-qty">
                                         <div class="qty quantity-partent">
                                             <button type="button" class="qty-down qty-btn" onclick="qtyDown(this, {{ $id }})" id="qtyDown">-</button>
-                                            <input type="text" data-id="{{ $id }}" value="{{ $details['quantity'] }}" class="form-control quantity update-cart input-number itemQty{{$details['id']}}" min="1" onkeyup="updateCart(this,{{ $id }})" onchange="validInputQty(this)" onkeypress="if(isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;">
+                                            <input type="text" data-id="input-{{$id}}" value="{{ $details['quantity'] }}" class="form-control quantity update-cart input-number itemQty{{$details['id']}}" min="1" onkeyup="updateCart(this,{{ $id }})" onchange="validInputQty(this)" onkeypress="if(isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;">
                                             <button type="button" class="qty-up qty-btn" onclick="qtyUp(this, {{ $id }})"id="qtyUp">+</button>
                                         </div>
                                     </div>

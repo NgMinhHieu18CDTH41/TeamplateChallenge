@@ -33,7 +33,7 @@ class AdminController extends Controller
         // danh sách 10 đơn hàng gần nhất
         $listcustomers = LoyalCustomer::with('orders')->orderByDesc('id')->limit(7)->get();
 
-
+        // danh sach ngay trong thang tu helper
         $listday = DateHelper::getListDayInMonth();
         //danh sach so san pham xem nhieu
         $topProduct = Product::orderByDesc('id')->limit(9)->get();

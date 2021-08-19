@@ -277,7 +277,7 @@ function validInputQty(ob) {
 function qtyDown(ob, id) {
     var qty = ob.nextElementSibling.value;
     qty--;
-    document.querySelector('[data-id="' + id + '"]').value = qty;
+    document.querySelector('[data-id="input-' + id + '"]').value = qty;
     if (qty < 1) return alert('Vui lòng nhập số lượng lớn hơn 0!');
     changeCartAjax(id, qty);
 }
@@ -285,8 +285,7 @@ function qtyDown(ob, id) {
 function qtyUp(ob, id) {
     var qty = ob.previousElementSibling.value;
     qty++;
-    console.log(qty++);
-    document.querySelector('[data-id="' + id + '"]').value = qty;
+    document.querySelector('[data-id="input-' + id + '"]').value = qty;
     changeCartAjax(id, qty);
 }
 

@@ -115,7 +115,7 @@
                                         <span>Sản phẩm</span><i class="fa fa-caret-down"></i>
                                     </a>
                                     <ul class="item_small hidden-sm hidden-xs">
-                                        @foreach($categories as $c)
+                                        @foreach(App\Model\Category::all() as $c)
                                             <li>
                                                 <a href="{{ route('products.show', ['id' => $c->id]) }}" title="">{{$c->name}}</a>
                                             </li>

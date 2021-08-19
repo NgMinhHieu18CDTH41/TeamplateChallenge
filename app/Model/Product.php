@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $table = 'products';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'id', 'name', 'price','status', 'desc', 'image','quantity', 'categories_id','create_at',
     ];
@@ -15,6 +16,8 @@ class Product extends Model
         'status' => 'boolean',
         '_status' => 'boolean',
     ];
+
+   
     /**
      * @var mixed
      */

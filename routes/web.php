@@ -14,7 +14,7 @@
 
 
 //Route::post('/contact','PageController@postcontact')->name('contact1');
-
+Route::get('/products/filters', 'ProductsController@submitFilter2');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('admin')->group( function () {
@@ -51,6 +51,7 @@ Route::get('/contact','PageController@contact')->name('lien-he');
 /* hommmmeee */
 Route::resource('/details', 'DetailProductController');
 Route::resource('/products', 'ProductsController');
+
 
 //Route::resource('/checkout', 'CheckoutController');
 
